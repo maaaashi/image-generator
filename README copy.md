@@ -1,19 +1,19 @@
-# CHATGPT REVERSI
+# IMAGE GENERATOR
 
 <div><img src="./docs/images/main.png" /></div>
 
-<div align="center">This repository is for a game where you can play the game of Reversi with ChatGPT. It was created based on the principles of clean architecture.</div>
+<div align="center">This system is an app that allows the AI to draw pictures based on the text you write. It can accommodate any language.</div>
 <div align="center">It is currently under development.</div>
 
-- [CHATGPT REVERSI](#chatgpt-reversi)
+- [IMAGE GENERATOR](#image-generator)
 - [Installation](#installation)
 - [Usage](#usage)
 
 # Installation
 
 ```bash
-$ git clone https://github.com/maaaashi/ReversiWithChatGPT
-$ cd ReversiWithChatGPT/
+$ git clone https://github.com/maaaashi/ImageGenerator
+$ cd ImageGenerator/
 ```
 
 # Usage
