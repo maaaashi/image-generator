@@ -8,7 +8,7 @@ export const POST = async (req: NextRequest) => {
     const result = await generateAsync({
       prompt,
       apiKey: process.env.NEXT_PUBLIC_API_KEY!,
-      outDir: 'public/generated',
+      outDir: 'public/',
     })
 
     console.log(result)

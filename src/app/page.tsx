@@ -24,7 +24,7 @@ export default function Home() {
 
     const match = str.match(regex)
     if (match) {
-      setImagePath('/generated/' + match[1])
+      setImagePath('/' + match[1])
     } else {
       console.log('No match found')
     }
