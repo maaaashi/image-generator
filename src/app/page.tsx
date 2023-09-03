@@ -8,34 +8,28 @@ export default function Home() {
   const submitHandler = async (e: FormEvent) => {
     e.preventDefault()
 
-    const results = await fetch('/api/generate-image', {
-      method: 'POST',
-      body: JSON.stringify({
-        prompt: promptState,
-      }),
-    })
+    if (process.env.NODE_ENV === 'production') {
+      const results = await fetch('/api/generate-image', {
+        method: 'POST',
+        body: JSON.stringify({
+          prompt: promptState,
+        }),
+      })
 
-    const json = await results.json()
+      const json = await results.json()
+      const buffer = Buffer.from(json.images[0].buffer.data)
+      const base64 = buffer.toString('base64')
 
-    const buffer = Buffer.from(json.images[0].buffer.data)
-    const base64 = buffer.toString('base64')
-
-    setImageBinary('data:image/png;base64,' + base64)
-    // const str = json.images[0].filePath
-    // const regex =
-    // /([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}.*\.png)$/
-
-    // const match = str.match(regex)
-    // if (match) {
-    //   setImagePath('/' + match[1])
-    // } else {
-    //   console.log('No match found')
-    // }
+      setImageBinary('data:image/png;base64,' + base64)
+    } else {
+      setTimeout(() => {
+        setImageBinary('/mockImage.png')
+      }, 2000)
+    }
   }
 
   return (
     <main className='container mx-auto'>
-      {process.env.NODE_ENV}
       <form onSubmit={submitHandler} className='flex'>
         <textarea
           className='textarea textarea-bordered'
