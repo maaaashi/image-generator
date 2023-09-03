@@ -4,12 +4,12 @@ import { Header } from '@/components/Header'
 import { FormEvent, useState } from 'react'
 
 export default function Home() {
-  const [promptState, setPromptState] = useState('Cats owned by wealthy people')
+  const [promptState, setPromptState] = useState('富裕層が飼っている猫')
   const [imageBinary, setImageBinary] = useState('')
   const submitHandler = async (e: FormEvent) => {
     e.preventDefault()
 
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === 'development') {
       const results = await fetch('/api/generate-image', {
         method: 'POST',
         body: JSON.stringify({
