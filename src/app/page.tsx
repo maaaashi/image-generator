@@ -35,6 +35,7 @@ export default function Home() {
 
   return (
     <main className='container mx-auto'>
+      {process.env.NODE_ENV}
       <form onSubmit={submitHandler} className='flex'>
         <textarea
           className='textarea textarea-bordered'
