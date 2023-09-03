@@ -5,16 +5,13 @@ export const POST = async (req: NextRequest) => {
   const { prompt } = await req.json()
 
   try {
-    const result = await generateAsync({
+    // @ts-ignore
+    const { images } = await generateAsync({
       prompt,
       apiKey: process.env.NEXT_PUBLIC_API_KEY!,
       outDir: 'public/',
+      noStore: true,
     })
-
-    console.log(result)
-
-    // @ts-ignore
-    const images = result.images
 
     return NextResponse.json({ images })
   } catch (e) {
