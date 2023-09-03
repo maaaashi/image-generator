@@ -9,7 +9,7 @@ export default function Home() {
   const submitHandler = async (e: FormEvent) => {
     e.preventDefault()
 
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === 'production') {
       const results = await fetch('/api/generate-image', {
         method: 'POST',
         body: JSON.stringify({
