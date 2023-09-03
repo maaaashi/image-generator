@@ -1,5 +1,6 @@
 'use client'
 
+import { Header } from '@/components/Header'
 import { FormEvent, useState } from 'react'
 
 export default function Home() {
@@ -29,24 +30,30 @@ export default function Home() {
   }
 
   return (
-    <main className='container mx-auto'>
-      <form onSubmit={submitHandler} className='flex'>
-        <textarea
-          className='textarea textarea-bordered'
-          placeholder='Type Prompt'
-          value={promptState}
-          onChange={(e) => {
-            setPromptState(e.target.value)
-          }}
-          required
-        ></textarea>
-        <button className='btn btn-primary self-end' onSubmit={submitHandler}>
-          画像生成！
-        </button>
-      </form>
+    <>
+      <Header />
+      <main className='container mx-auto mt-5'>
+        <form onSubmit={submitHandler} className='flex'>
+          <textarea
+            className='textarea textarea-bordered flex-1'
+            placeholder='Type Prompt'
+            value={promptState}
+            onChange={(e) => {
+              setPromptState(e.target.value)
+            }}
+            rows={1}
+            required
+          ></textarea>
+          <button className='btn btn-primary self-end' onSubmit={submitHandler}>
+            画像生成！
+          </button>
+        </form>
 
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      {imageBinary ? <img src={imageBinary} alt='generate-image' /> : <></>}
-    </main>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <div className='flex justify-center p-5'>
+          {imageBinary ? <img src={imageBinary} alt='generate-image' /> : <></>}
+        </div>
+      </main>
+    </>
   )
 }
