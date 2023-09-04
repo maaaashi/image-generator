@@ -12,41 +12,34 @@ export default function Home() {
 
     setLoading(true)
 
-    if (process.env.NODE_ENV === 'production') {
-      let condition = true
-      let response: Response | undefined = undefined
+    let condition = true
+    let response: Response | undefined = undefined
 
-      while (condition) {
-        try {
-          const res = await fetch('/api/generate-image', {
-            method: 'POST',
-            body: JSON.stringify({
-              prompt: promptState,
-            }),
-          })
-          if (res.status === 200) {
-            response = res
-            condition = false
-          }
-        } catch (error) {
-          console.log('error')
+    while (condition) {
+      try {
+        const res = await fetch('/api/generate-image', {
+          method: 'POST',
+          body: JSON.stringify({
+            prompt: promptState,
+          }),
+        })
+        if (res.status === 200) {
+          response = res
+          condition = false
         }
+      } catch (error) {
+        console.log('error')
       }
-
-      if (!response) return
-
-      const json = await response.json()
-      const buffer = Buffer.from(json.images[0].buffer.data)
-      const base64 = buffer.toString('base64')
-
-      setImageBinary('data:image/png;base64,' + base64)
-      setLoading(false)
-    } else {
-      setTimeout(() => {
-        setImageBinary('/mockImage.png')
-        setLoading(false)
-      }, 4000)
     }
+
+    if (!response) return
+
+    const json = await response.json()
+    const buffer = Buffer.from(json.images[0].buffer.data)
+    const base64 = buffer.toString('base64')
+
+    setImageBinary('data:image/png;base64,' + base64)
+    setLoading(false)
   }
 
   const viewImage = () => {
