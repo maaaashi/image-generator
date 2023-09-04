@@ -31,7 +31,13 @@ export const POST = async (req: NextRequest) => {
     const response = await postGPT(prompt, draw)
     const con = response.data.choices[0].message?.content!
 
-    console.log(prompt + ' is ' + response.data.choices[0].message?.content!)
+    console.log(
+      draw +
+        '風: ' +
+        prompt +
+        ' is ' +
+        response.data.choices[0].message?.content!
+    )
     // @ts-ignore
     const { images } = await generateAsync({
       prompt: con,
