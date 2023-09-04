@@ -10,17 +10,18 @@ const postGPT = async (prompt: string) => {
   const openai = new OpenAIApi(configuration)
   const model = 'gpt-4'
 
-  const content = `
-[Rules].
-Create a prompt that instructs the AI to generate an illustration.
-Create a keyword list using only adjectives, verbs and nouns for the sentences you are about to enter.
-The keywords should be in English.
-The number of keywords should be at least 10 and no more than 30.
-No other information is required.
+  const content = `画像生成AIを使って、「${prompt}」を書くための英語のプロンプトを考えてください。`
+  //   const content = `
+  // [Rules].
+  // Create a prompt that instructs the AI to generate an illustration.
+  // Create a keyword list using only adjectives, verbs and nouns for the sentences you are about to enter.
+  // The keywords should be in English.
+  // The number of keywords should be at least 10 and no more than 30.
+  // No other information is required.
 
-[Format]
-keyword, keyword, keyword, (loop below)
-`
+  // [Format]
+  // keyword, keyword, keyword, (loop below)
+  // `
 
   return await openai.createChatCompletion({
     model,
