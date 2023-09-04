@@ -2,6 +2,7 @@
 
 import { Header } from '@/components/Header'
 import { FormEvent, useState } from 'react'
+import Swal from 'sweetalert2'
 
 export default function Home() {
   const [loading, setLoading] = useState(false)
@@ -10,6 +11,14 @@ export default function Home() {
   const [imageBinary, setImageBinary] = useState('')
   const submitHandler = async (e: FormEvent) => {
     e.preventDefault()
+
+    const confirm = await Swal.fire({
+      title: `${draw}に「${promptState}」を生成します。`,
+      icon: 'info',
+      showCancelButton: true,
+    })
+
+    if (!confirm.isConfirmed) return
 
     setLoading(true)
 
@@ -58,7 +67,6 @@ export default function Home() {
       <Header />
       <main className='container mx-auto mt-5'>
         <form onSubmit={submitHandler} className='flex flex-col gap-5'>
-          {draw}
           <div className='flex gap-5'>
             {['写実的', '漫画風'].map((d, index) => {
               return (
