@@ -42,28 +42,15 @@ export const POST = async (req: NextRequest) => {
   const { prompt } = await req.json()
 
   try {
-    let con = ''
-    let conti = true
+    const response = await postGPT(prompt)
+    const con = response.data.choices[0].message?.content!
 
-    while (conti) {
-      try {
-        const response = await postGPT(prompt)
-        con = response.data.choices[0].message?.content!
-
-        conti = false
-        console.log(
-          prompt + ' is ' + response.data.choices[0].message?.content!
-        )
-      } catch (error) {
-        console.log('error')
-        console.log(error)
-      }
-    }
-
+    console.log(prompt + ' is ' + response.data.choices[0].message?.content!)
     // @ts-ignore
     const { images } = await generateAsync({
       prompt: con,
       apiKey: process.env.NEXT_PUBLIC_API_KEY!,
+      outDir: 'public/',
       noStore: true,
     })
 
