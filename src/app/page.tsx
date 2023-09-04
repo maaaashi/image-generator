@@ -22,7 +22,7 @@ export default function Home() {
           method: 'POST',
           body: JSON.stringify({
             prompt: promptState,
-            draw: '漫画',
+            draw,
           }),
         })
         if (res.status === 200) {
