@@ -4,10 +4,13 @@ import { Header } from '@/components/Header'
 import { FormEvent, useState } from 'react'
 
 export default function Home() {
+  const [loading, setLoading] = useState(false)
   const [promptState, setPromptState] = useState('富裕層が飼っている猫')
   const [imageBinary, setImageBinary] = useState('')
   const submitHandler = async (e: FormEvent) => {
     e.preventDefault()
+
+    setLoading(true)
 
     if (process.env.NODE_ENV === 'production') {
       let condition = true
@@ -37,11 +40,22 @@ export default function Home() {
       const base64 = buffer.toString('base64')
 
       setImageBinary('data:image/png;base64,' + base64)
+      setLoading(false)
     } else {
       setTimeout(() => {
         setImageBinary('/mockImage.png')
-      }, 2000)
+        setLoading(false)
+      }, 4000)
     }
+  }
+
+  const viewImage = () => {
+    if (loading)
+      return <span className='loading loading-infinity loading-lg'></span>
+
+    if (!imageBinary) return <></>
+    // eslint-disable-next-line @next/next/no-img-element
+    return <img src={imageBinary} alt='generate-image' />
   }
 
   return (
@@ -59,15 +73,17 @@ export default function Home() {
             rows={1}
             required
           ></textarea>
-          <button className='btn btn-primary self-end' onSubmit={submitHandler}>
+          <button
+            className='btn btn-primary self-end disabled:btn-disabled'
+            onSubmit={submitHandler}
+            disabled={loading}
+          >
             画像生成！
           </button>
         </form>
 
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <div className='flex justify-center p-5'>
-          {imageBinary ? <img src={imageBinary} alt='generate-image' /> : <></>}
-        </div>
+        <div className='flex justify-center p-5'>{viewImage()}</div>
       </main>
     </>
   )
