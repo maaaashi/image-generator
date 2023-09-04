@@ -6,6 +6,7 @@ import { FormEvent, useState } from 'react'
 export default function Home() {
   const [loading, setLoading] = useState(false)
   const [promptState, setPromptState] = useState('富裕層が飼っている猫')
+  const [draw, setDraw] = useState('写実的')
   const [imageBinary, setImageBinary] = useState('')
   const submitHandler = async (e: FormEvent) => {
     e.preventDefault()
@@ -21,6 +22,7 @@ export default function Home() {
           method: 'POST',
           body: JSON.stringify({
             prompt: promptState,
+            draw: '漫画',
           }),
         })
         if (res.status === 200) {
@@ -55,24 +57,45 @@ export default function Home() {
     <>
       <Header />
       <main className='container mx-auto mt-5'>
-        <form onSubmit={submitHandler} className='flex'>
-          <textarea
-            className='textarea textarea-bordered flex-1'
-            placeholder='Type Prompt'
-            value={promptState}
-            onChange={(e) => {
-              setPromptState(e.target.value)
-            }}
-            rows={1}
-            required
-          ></textarea>
-          <button
-            className='btn btn-primary self-end disabled:btn-disabled'
-            onSubmit={submitHandler}
-            disabled={loading}
-          >
-            画像生成！
-          </button>
+        <form onSubmit={submitHandler} className='flex flex-col gap-5'>
+          {draw}
+          <div className='flex gap-5'>
+            {['写実的', '漫画風'].map((d, index) => {
+              return (
+                <label className='flex items-center gap-3' key={index}>
+                  <div>{d}</div>
+                  <input
+                    type='radio'
+                    name='radio-2'
+                    className='radio radio-primary'
+                    value={d}
+                    onChange={(e) => {
+                      setDraw(e.target.value)
+                    }}
+                  />
+                </label>
+              )
+            })}
+          </div>
+          <div className='flex'>
+            <textarea
+              className='textarea textarea-bordered flex-1'
+              placeholder='Type Prompt'
+              value={promptState}
+              onChange={(e) => {
+                setPromptState(e.target.value)
+              }}
+              rows={1}
+              required
+            ></textarea>
+            <button
+              className='btn btn-primary self-end disabled:btn-disabled'
+              onSubmit={submitHandler}
+              disabled={loading}
+            >
+              画像生成！
+            </button>
+          </div>
         </form>
 
         {/* eslint-disable-next-line @next/next/no-img-element */}

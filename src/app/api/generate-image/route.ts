@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { generateAsync } from 'stability-client'
 import { Configuration, OpenAIApi } from 'openai'
 
-const postGPT = async (prompt: string) => {
+const postGPT = async (prompt: string, draw: string) => {
   const apiKey = process.env.NEXT_PUBLIC_GPT_API_KEY
   const configuration = new Configuration({
     apiKey,
@@ -10,7 +10,7 @@ const postGPT = async (prompt: string) => {
   const openai = new OpenAIApi(configuration)
   const model = 'gpt-4'
 
-  const content = `画像生成AIを使って、「${prompt}」を書くための英語のプロンプトを考えてください。`
+  const content = `画像生成AIを使って、${draw}に「${prompt}」を書くための英語のプロンプトを考えてください。`
 
   return await openai.createChatCompletion({
     model,
@@ -25,10 +25,10 @@ const postGPT = async (prompt: string) => {
 }
 
 export const POST = async (req: NextRequest) => {
-  const { prompt } = await req.json()
+  const { prompt, draw } = await req.json()
 
   try {
-    const response = await postGPT(prompt)
+    const response = await postGPT(prompt, draw)
     const con = response.data.choices[0].message?.content!
 
     console.log(prompt + ' is ' + response.data.choices[0].message?.content!)
