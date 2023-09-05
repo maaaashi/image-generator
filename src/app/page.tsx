@@ -7,7 +7,7 @@ import Swal from 'sweetalert2'
 export default function Home() {
   const [loading, setLoading] = useState(false)
   const [promptState, setPromptState] = useState('富裕層が飼っている猫')
-  const [draw, setDraw] = useState('写実的')
+  const [draw, setDraw] = useState('リアル')
   const [imageBinary, setImageBinary] = useState('')
   const submitHandler = async (e: FormEvent) => {
     e.preventDefault()
@@ -68,7 +68,7 @@ export default function Home() {
       <main className='container mx-auto mt-5'>
         <form onSubmit={submitHandler} className='flex flex-col gap-5'>
           <div className='flex gap-5'>
-            {['写実的', '漫画風'].map((d, index) => {
+            {['リアル', '漫画風'].map((d, index) => {
               return (
                 <label className='flex items-center gap-3' key={index}>
                   <div>{d}</div>
