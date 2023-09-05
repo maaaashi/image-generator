@@ -10,7 +10,7 @@ const postGPT = async (prompt: string, draw: string) => {
   const openai = new OpenAIApi(configuration)
   const model = 'gpt-4'
 
-  const content = `画像生成AIを使って、${draw}に「${prompt}」を書くための英語のプロンプトを考えてください。`
+  const content = `画像生成AIを使って、${draw}「${prompt}」を書くための英語のプロンプトを考えてください。`
 
   return await openai.createChatCompletion({
     model,
@@ -37,6 +37,7 @@ export const POST = async (req: NextRequest) => {
     // @ts-ignore
     const { images } = await generateAsync({
       prompt: con,
+      // prompt,
       apiKey: process.env.NEXT_PUBLIC_API_KEY!,
       outDir: 'public/',
       noStore: true,

@@ -1,19 +1,26 @@
 'use client'
 
 import { Header } from '@/components/Header'
-import { FormEvent, useState } from 'react'
+import { postGenerateImage } from '@/libs/postGenerateImage'
+import { FormEvent, useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
+
+export type Binary = {
+  prompt: string
+  data: string
+}
 
 export default function Home() {
   const [loading, setLoading] = useState(false)
   const [promptState, setPromptState] = useState('富裕層が飼っている猫')
-  const [draw, setDraw] = useState('リアル')
-  const [imageBinary, setImageBinary] = useState('')
+  const [draw, setDraw] = useState('')
+  const [imageBinaries, setImageBinaries] = useState<Binary[]>([])
+  const [imageBinary, setImageBinary] = useState<Binary>()
   const submitHandler = async (e: FormEvent) => {
     e.preventDefault()
 
     const confirm = await Swal.fire({
-      title: `${draw}に「${promptState}」を生成します。`,
+      title: `${draw}「${promptState}」を生成します。`,
       icon: 'info',
       showCancelButton: true,
     })
@@ -22,34 +29,11 @@ export default function Home() {
 
     setLoading(true)
 
-    let condition = true
-    let response: Response | undefined = undefined
+    const binary = await postGenerateImage(promptState, draw)
 
-    while (condition) {
-      try {
-        const res = await fetch('/api/generate-image', {
-          method: 'POST',
-          body: JSON.stringify({
-            prompt: promptState,
-            draw,
-          }),
-        })
-        if (res.status === 200) {
-          response = res
-          condition = false
-        }
-      } catch (error) {
-        console.log('error')
-      }
-    }
+    if (!binary) return
 
-    if (!response) return
-
-    const json = await response.json()
-    const buffer = Buffer.from(json.images[0].buffer.data)
-    const base64 = buffer.toString('base64')
-
-    setImageBinary('data:image/png;base64,' + base64)
+    setImageBinaries((c) => [...c, binary])
     setLoading(false)
   }
 
@@ -59,8 +43,16 @@ export default function Home() {
 
     if (!imageBinary) return <></>
     // eslint-disable-next-line @next/next/no-img-element
-    return <img src={imageBinary} alt='generate-image' />
+    return <img src={imageBinary.data} alt='generate-image' />
   }
+
+  useEffect(() => {
+    setDraw('リアルな')
+  }, [])
+
+  useEffect(() => {
+    setImageBinary(imageBinaries[imageBinaries.length - 1])
+  }, [imageBinaries])
 
   return (
     <>
@@ -68,9 +60,12 @@ export default function Home() {
       <main className='container mx-auto mt-5'>
         <form onSubmit={submitHandler} className='flex flex-col gap-5'>
           <div className='flex gap-5'>
-            {['リアル', '漫画風'].map((d, index) => {
+            {['リアルな', '漫画風に'].map((d, index) => {
               return (
-                <label className='flex items-center gap-3' key={index}>
+                <label
+                  className='flex items-center gap-3 cursor-pointer hover:font-bold p-1'
+                  key={index}
+                >
                   <div>{d}</div>
                   <input
                     type='radio'
@@ -80,6 +75,7 @@ export default function Home() {
                     onChange={(e) => {
                       setDraw(e.target.value)
                     }}
+                    checked={d === draw}
                   />
                 </label>
               )
@@ -107,7 +103,26 @@ export default function Home() {
         </form>
 
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <div className='flex justify-center p-5'>{viewImage()}</div>
+        <div className='flex justify-center p-5 gap-5'>
+          <div className='border p-5 shadow bg-base-200'>{viewImage()}</div>
+          <div className='flex flex-col gap-2 items-center'>
+            <p className='font-bold'>履歴</p>
+            {imageBinaries.map((binary, index) => {
+              return (
+                <div key={index}>
+                  <button
+                    className='btn'
+                    onClick={() => {
+                      setImageBinary(binary)
+                    }}
+                  >
+                    {index + 1}: {binary.prompt}
+                  </button>
+                </div>
+              )
+            })}
+          </div>
+        </div>
       </main>
     </>
   )
