@@ -1,7 +1,7 @@
 'use client'
 
 import { Header } from '@/components/Header'
-import { postGenerateImage } from '@/libs/postGenerateImage'
+import { postGenerateImageAPI } from '@/libs/postGenerateImage'
 import { FormEvent, useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 
@@ -29,7 +29,7 @@ export default function Home() {
 
     setLoading(true)
 
-    const binary = await postGenerateImage(promptState, draw)
+    const binary = await postGenerateImageAPI(promptState, draw)
 
     if (!binary) return
 
