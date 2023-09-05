@@ -32,11 +32,7 @@ export const POST = async (req: NextRequest) => {
     const con = response.data.choices[0].message?.content!
 
     console.log(
-      draw +
-        '風: ' +
-        prompt +
-        ' is ' +
-        response.data.choices[0].message?.content!
+      draw + ': ' + prompt + ' is ' + response.data.choices[0].message?.content!
     )
     // @ts-ignore
     const { images } = await generateAsync({
@@ -44,7 +40,7 @@ export const POST = async (req: NextRequest) => {
       apiKey: process.env.NEXT_PUBLIC_API_KEY!,
       outDir: 'public/',
       noStore: true,
-      steps: 10,
+      steps: 50,
     })
 
     return NextResponse.json({ images })
