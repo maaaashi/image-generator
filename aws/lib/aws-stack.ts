@@ -6,7 +6,6 @@ import path = require('path');
 export class MaaaashiImageGenerator extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
-    console.log(process.env)
 
     new Function(this, 'ImageGeneratorGeneratePrompt', {
       functionName: 'ImageGeneratorGeneratePrompt',
@@ -14,7 +13,7 @@ export class MaaaashiImageGenerator extends cdk.Stack {
       code: Code.fromAsset(path.join(__dirname, '../lambda/generate-prompt/')),
       handler: 'index.handler',
       environment: {
-        DREAM_STUDIO_APIKEY: process.env.NEXT_PUBLIC_API_KEY!
+        CHATGPT_APIKEY: process.env.CHATGPT_APIKEY!
       }
     });
   }
