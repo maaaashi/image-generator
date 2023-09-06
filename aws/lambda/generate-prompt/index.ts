@@ -2,7 +2,7 @@ import { Handler } from 'aws-lambda'
 import { Configuration, OpenAIApi } from 'openai'
 
 const postGPT = async (prompt: string, draw: string) => {
-  const apiKey = process.env.NEXT_PUBLIC_GPT_API_KEY
+  const apiKey = process.env.DREAM_STUDIO_APIKEY
   const configuration = new Configuration({
     apiKey,
   })
