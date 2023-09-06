@@ -29,4 +29,6 @@ jobs:
           AWS_DEFAULT_REGION: 'ap-northeast-1'
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          CHATGPT_APIKEY: ${{ secrets.CHATGPT_APIKEY }}
+          DREAM_STUDIO_APIKEY: ${{ secrets.DREAM_STUDIO_APIKEY }}
 
