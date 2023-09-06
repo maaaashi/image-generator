@@ -7,6 +7,8 @@ export class MaaaashiImageGenerator extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
+    console.log(process.env)
+
     console.log('apikey is ' + process.env.CHATGPT_APIKEY)
 
     new Function(this, 'ImageGeneratorGeneratePrompt', {
