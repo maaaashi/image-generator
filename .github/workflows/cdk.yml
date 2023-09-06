@@ -24,7 +24,7 @@ jobs:
         run: npx tsc ./index.ts
       - name: CDK Deploy
         working-directory: aws
-        run: npm run cdk deploy
+        run: npm run cdk deploy --require-approval never
         env:
           AWS_DEFAULT_REGION: 'ap-northeast-1'
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
