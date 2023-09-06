@@ -16,6 +16,12 @@ jobs:
       - name: Setup dependencies
         working-directory: aws
         run: npm ci
+      - name: Setup lambda dependency
+        working-directory: aws/lambda/generate-prompt
+        run: npm ci
+      - name: Setup lambda compile
+        working-directory: aws/lambda/generate-prompt
+        run: npx tsc ./index.ts
       - name: CDK Deploy
         working-directory: aws
         run: npm run cdk deploy
