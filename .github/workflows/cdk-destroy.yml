@@ -12,7 +12,8 @@ jobs:
       - name: Setup dependencies
         working-directory: aws
         run: npm ci
-      - name: CDK Deploy
+      - name: CDK Destroy
+        working-directory: aws
         run: npm run cdk destroy
         env:
           AWS_DEFAULT_REGION: 'ap-northeast-1'
