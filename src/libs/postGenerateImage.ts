@@ -23,12 +23,12 @@ const generatePrompt = async (
     } catch (error) {
       console.log('error')
     }
-
-    if (!response) return
-
-    const json = await response.json()
-    return json.prompt
   }
+
+  if (!response) return
+
+  const json = await response.json()
+  return json.prompt
 }
 
 const generateImage = async (prompt: string) => {
