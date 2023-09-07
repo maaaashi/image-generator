@@ -1,4 +1,4 @@
-import { Duration, Stack, StackProps } from 'aws-cdk-lib';
+import { CfnOutput, Duration, Stack, StackProps } from 'aws-cdk-lib';
 import { Code, Function, FunctionUrlAuthType, HttpMethod, Runtime } from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
 import path = require('path');
@@ -18,7 +18,7 @@ export class MaaaashiImageGenerator extends Stack {
       timeout: Duration.minutes(15)
     });
 
-    generatePromptLambda.addFunctionUrl({
+    const generatePromptFunctionURL = generatePromptLambda.addFunctionUrl({
       authType: FunctionUrlAuthType.NONE,
       cors: {
         allowedMethods: [HttpMethod.POST],
@@ -37,12 +37,20 @@ export class MaaaashiImageGenerator extends Stack {
       timeout: Duration.minutes(15)
     });
 
-    generateImageLambda.addFunctionUrl({
+    const generateImageFunctionURL = generateImageLambda.addFunctionUrl({
       authType: FunctionUrlAuthType.NONE,
       cors: {
         allowedMethods: [HttpMethod.POST],
         allowedOrigins: ["*"],
       },
     });
+
+    new CfnOutput(this, 'GeneratePromptURL', {
+      value: generatePromptFunctionURL.url
+    })
+
+    new CfnOutput(this, 'GenerateImageURL', {
+      value: generateImageFunctionURL.url
+    })
   }
 }
