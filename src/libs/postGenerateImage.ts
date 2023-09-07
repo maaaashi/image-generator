@@ -38,8 +38,6 @@ const generateImage = async (prompt: string) => {
   let response: Response | undefined = undefined
   const generateImageURL = process.env.NEXT_PUBLIC_GENERATE_IMAGE_URL!
 
-  console.log(prompt)
-
   while (condition) {
     try {
       const res = await fetch(generateImageURL, {
@@ -70,6 +68,7 @@ export const postGenerateImageAPI = async (
 ): Promise<Binary | undefined> => {
   const generatedPrompt = await generatePrompt(prompt, draw)
 
+  console.log(generatedPrompt)
   if (!generatedPrompt) return
 
   const base64 = await generateImage(generatedPrompt)
