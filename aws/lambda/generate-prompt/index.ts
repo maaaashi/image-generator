@@ -7,13 +7,13 @@ const postGPT = async (prompt: string, draw: string) => {
     apiKey,
   })
   const openai = new OpenAIApi(configuration)
-  const model = 'gpt-4.0'
+  const model = 'gpt-4'
 
   const content = `画像生成AIを使って、${draw}「${prompt}」を書くための英語のプロンプトを考えてください。`
 
   return await openai.createChatCompletion({
     model,
-    temperature: 2,
+    temperature: 0.2,
     messages: [
       {
         role: 'system',
