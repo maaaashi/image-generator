@@ -34,7 +34,7 @@ export class MaaaashiImageGenerator extends Stack {
       environment: {
         DREAM_STUDIO_APIKEY: process.env.DREAM_STUDIO_APIKEY!
       },
-      timeout: Duration.minutes(15)
+      timeout: Duration.seconds(20)
     });
 
     const generateImageFunctionURL = generateImageLambda.addFunctionUrl({
