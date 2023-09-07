@@ -25,5 +25,24 @@ export class MaaaashiImageGenerator extends Stack {
         allowedOrigins: ["*"],
       },
     });
+
+    const generateImageLambda = new Function(this, 'ImageGeneratorGenerateImage', {
+      functionName: 'ImageGeneratorGenerateImage',
+      runtime: Runtime.NODEJS_18_X,
+      code: Code.fromAsset(path.join(__dirname, '../lambda/generate-image/')),
+      handler: 'index.handler',
+      environment: {
+        DREAM_STUDIO_APIKEY: process.env.DREAM_STUDIO_APIKEY!
+      },
+      timeout: Duration.minutes(15)
+    });
+
+    generateImageLambda.addFunctionUrl({
+      authType: FunctionUrlAuthType.NONE,
+      cors: {
+        allowedMethods: [HttpMethod.POST],
+        allowedOrigins: ["*"],
+      },
+    });
   }
 }
