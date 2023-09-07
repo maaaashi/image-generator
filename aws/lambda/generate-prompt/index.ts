@@ -29,6 +29,7 @@ type Input = {
 }
 
 export const handler: Handler<Input, string> = async (req) => {
+  console.log(req)
   const { prompt, draw } = req
 
   try {
