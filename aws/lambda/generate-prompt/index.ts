@@ -7,7 +7,7 @@ const postGPT = async (prompt: string, draw: string) => {
     apiKey,
   })
   const openai = new OpenAIApi(configuration)
-  const model = 'gpt-3.5-turbo'
+  const model = 'gpt-4.0'
 
   const content = `画像生成AIを使って、${draw}「${prompt}」を書くための英語のプロンプトを考えてください。`
 

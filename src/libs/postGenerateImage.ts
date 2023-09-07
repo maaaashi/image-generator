@@ -30,8 +30,7 @@ const generatePrompt = async (
   if (!response) return
 
   const json = await response.json()
-  console.log(json)
-  return json.prompt
+  return json.content
 }
 
 const generateImage = async (prompt: string) => {
@@ -69,7 +68,6 @@ export const postGenerateImageAPI = async (
 ): Promise<Binary | undefined> => {
   const generatedPrompt = await generatePrompt(prompt, draw)
 
-  console.log(generatedPrompt)
   if (!generatedPrompt) return
 
   const base64 = await generateImage(generatedPrompt)
