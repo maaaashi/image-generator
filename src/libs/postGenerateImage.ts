@@ -30,6 +30,7 @@ const generatePrompt = async (
   if (!response) return
 
   const json = await response.json()
+  console.log(json)
   return json.prompt
 }
 
