@@ -7,9 +7,11 @@ const generatePrompt = async (
   let condition = true
   let response: Response | undefined = undefined
 
+  const generatePromptURL = process.env.NEXT_PUBLIC_GENERATE_PROMPT_URL!
+
   while (condition) {
     try {
-      const res = await fetch('/api/generate-prompt', {
+      const res = await fetch(generatePromptURL, {
         method: 'POST',
         body: JSON.stringify({
           prompt,
@@ -34,10 +36,13 @@ const generatePrompt = async (
 const generateImage = async (prompt: string) => {
   let condition = true
   let response: Response | undefined = undefined
+  const generateImageURL = process.env.NEXT_PUBLIC_GENERATE_IMAGE_URL!
+
+  console.log(prompt)
 
   while (condition) {
     try {
-      const res = await fetch('/api/generate-image', {
+      const res = await fetch(generateImageURL, {
         method: 'POST',
         body: JSON.stringify({
           prompt,
