@@ -1,3 +1,5 @@
 for dir in aws/lambda/*; do
-  (npm ci && npx tsc ./index.ts)
+  (ls)
 done
+
+# (npm ci && npx tsc ./index.ts)
