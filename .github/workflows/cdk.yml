@@ -19,8 +19,14 @@ jobs:
       - name: Setup lambda dependency
         working-directory: aws/lambda/generate-prompt
         run: npm ci
+      - name: Setup lambda dependency
+        working-directory: aws/lambda/generate-image
+        run: npm ci
       - name: Setup lambda compile
         working-directory: aws/lambda/generate-prompt
+        run: npx tsc ./index.ts
+      - name: Setup lambda compile
+        working-directory: aws/lambda/generate-image
         run: npx tsc ./index.ts
       - name: CDK Deploy
         working-directory: aws
