@@ -28,9 +28,8 @@ type Input = {
   draw: string
 }
 
-export const handler: Handler<Input, string> = async (req) => {
-  console.log(req)
-  const { prompt, draw } = req
+export const handler: Handler = async (req) => {
+  const { prompt, draw } = JSON.parse(req.body) as Input
 
   try {
     const response = await postGPT(prompt, draw)

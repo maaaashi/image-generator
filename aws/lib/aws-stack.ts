@@ -21,7 +21,7 @@ export class MaaaashiImageGenerator extends Stack {
     generatePromptLambda.addFunctionUrl({
       authType: FunctionUrlAuthType.NONE,
       cors: {
-        allowedMethods: [HttpMethod.ALL],
+        allowedMethods: [HttpMethod.POST],
         allowedOrigins: ["*"],
       },
     });
