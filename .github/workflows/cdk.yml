@@ -17,7 +17,7 @@ jobs:
         working-directory: aws
         run: npm ci
       - name: Setup lambda
-        run: ls
+        run: bash ./lamba-dependency.sh
       - name: CDK Deploy
         working-directory: aws
         run: npm run cdk deploy
