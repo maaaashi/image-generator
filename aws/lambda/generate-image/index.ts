@@ -14,18 +14,14 @@ export const handler: Handler = async (req) => {
     const { images } = await generateAsync({
       prompt,
       apiKey: process.env.DREAM_STUDIO_APIKEY!,
-      outDir: '/tmp/generated/',
+      noStore: true,
       steps: 50,
     })
 
-    const filePath = images[0].filePath
-
-    const blob = await put(filePath, '', {
+    await put(prompt, images[0].buffer.data, {
       access: 'public',
     });
 
-    console.log(blob)
-    
     return JSON.stringify({ images });
   } catch (e) {
     console.log(e)
