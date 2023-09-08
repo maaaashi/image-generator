@@ -18,7 +18,11 @@ export const handler: Handler = async (req) => {
       steps: 50,
     })
 
-    await put(prompt, images[0].buffer.data, {
+    const arrayBuffer = images[0].buffer.data as ArrayBuffer
+
+    console.log(arrayBuffer)
+
+    await put(prompt, arrayBuffer, {
       access: 'public',
     });
 
