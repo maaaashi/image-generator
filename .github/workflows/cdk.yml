@@ -27,4 +27,4 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           CHATGPT_APIKEY: ${{ secrets.CHATGPT_APIKEY }}
           DREAM_STUDIO_APIKEY: ${{ secrets.DREAM_STUDIO_APIKEY }}
-
+          BLOB_READ_WRITE_TOKEN: ${{ secrets.BLOB_READ_WRITE_TOKEN }}
