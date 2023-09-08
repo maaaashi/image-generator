@@ -20,9 +20,11 @@ export const handler: Handler = async (req) => {
 
     const filePath = images[0].filePath
 
-    await put(filePath, '', {
+    const blob = await put(filePath, '', {
       access: 'public',
     });
+
+    console.log(blob)
 
     return JSON.stringify({ images });
   } catch (e) {

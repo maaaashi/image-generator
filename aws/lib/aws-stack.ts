@@ -32,7 +32,8 @@ export class MaaaashiImageGenerator extends Stack {
       code: Code.fromAsset(path.join(__dirname, '../lambda/generate-image/')),
       handler: 'index.handler',
       environment: {
-        DREAM_STUDIO_APIKEY: process.env.DREAM_STUDIO_APIKEY!
+        DREAM_STUDIO_APIKEY: process.env.DREAM_STUDIO_APIKEY!,
+        BLOB_READ_WRITE_TOKEN: "vercel_blob_rw_unQiNJwLxwla3I0v_a0lTvM7SeRSmg9wK94it5bPIl8ElLm"
       },
       timeout: Duration.seconds(20)
     });
