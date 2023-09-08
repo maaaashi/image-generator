@@ -13,7 +13,7 @@ const postGPT = async (prompt: string, draw: string) => {
 
   return await openai.createChatCompletion({
     model,
-    temperature: 0.2,
+    temperature: 0.5,
     messages: [
       {
         role: 'system',

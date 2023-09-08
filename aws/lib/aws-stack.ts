@@ -33,7 +33,7 @@ export class MaaaashiImageGenerator extends Stack {
       handler: 'index.handler',
       environment: {
         DREAM_STUDIO_APIKEY: process.env.DREAM_STUDIO_APIKEY!,
-        BLOB_READ_WRITE_TOKEN: "vercel_blob_rw_unQiNJwLxwla3I0v_a0lTvM7SeRSmg9wK94it5bPIl8ElLm"
+        BLOB_READ_WRITE_TOKEN: process.env.BLOB_READ_WRITE_TOKEN!
       },
       timeout: Duration.seconds(20)
     });
