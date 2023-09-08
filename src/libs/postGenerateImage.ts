@@ -1,4 +1,4 @@
-import { Binary } from '@/app/page'
+import { Binary } from '@/components/Generate'
 
 const generatePrompt = async (
   prompt: string,
