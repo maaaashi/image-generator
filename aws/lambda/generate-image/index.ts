@@ -21,9 +21,10 @@ export const handler: Handler = async (req) => {
     try {
       const arrayBuffer = images[0].buffer as ArrayBuffer
 
-      await put(prompt, arrayBuffer, {
+       const blob = await put(prompt, arrayBuffer, {
         access: 'public',
       })
+      console.log(blob)
     } catch (error) {
       console.log(error)
     }
