@@ -1,6 +1,7 @@
 import { Handler } from 'aws-lambda'
 import { generateAsync } from 'stability-client'
 import { put } from '@vercel/blob'
+import { v4 as uuidv4 } from 'uuid'
 
 type Input = {
   prompt: string
@@ -20,9 +21,8 @@ export const handler: Handler = async (req) => {
 
     try {
       const arrayBuffer = images[0].buffer as ArrayBuffer
-      const today = new Date()
 
-       const blob = await put(today.toISOString(), arrayBuffer, {
+      const blob = await put(uuidv4(), arrayBuffer, {
         access: 'public',
       })
 
