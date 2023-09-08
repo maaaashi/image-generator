@@ -19,9 +19,7 @@ export const handler: Handler = async (req) => {
     })
 
     try {
-      console.log(images)
-
-      const arrayBuffer = images[0].buffer.data as ArrayBuffer
+      const arrayBuffer = images[0].buffer as ArrayBuffer
 
       await put(prompt, arrayBuffer, {
         access: 'public',
