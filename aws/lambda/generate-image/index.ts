@@ -18,15 +18,17 @@ export const handler: Handler = async (req) => {
       steps: 50,
     })
 
-    const arrayBuffer = images[0].buffer.data as ArrayBuffer
+    try {
+      console.log(images)
 
-    console.log(arrayBuffer)
+      const arrayBuffer = images[0].buffer.data as ArrayBuffer
 
-    await put(prompt, arrayBuffer, {
-      access: 'public',
-    });
+      await put(prompt, arrayBuffer, {
+        access: 'public',
+      })
+    } catch (error) {}
 
-    return JSON.stringify({ images });
+    return JSON.stringify({ images })
   } catch (e) {
     console.log(e)
     return JSON.stringify({})
