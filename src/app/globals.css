@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.image-gallery {
+  width: 65%;
+}
+
+@media (max-width: 1024px) {
+  .image-gallery {
+    width: 100%;
+  }
+}
