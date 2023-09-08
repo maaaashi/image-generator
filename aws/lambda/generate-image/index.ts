@@ -20,11 +20,13 @@ export const handler: Handler = async (req) => {
 
     try {
       const arrayBuffer = images[0].buffer as ArrayBuffer
+      const today = new Date()
 
-       const blob = await put(prompt, arrayBuffer, {
+       const blob = await put(today.toISOString(), arrayBuffer, {
         access: 'public',
       })
-      console.log(blob)
+
+      console.log('generate: ' + blob.url)
     } catch (error) {
       console.log(error)
     }
