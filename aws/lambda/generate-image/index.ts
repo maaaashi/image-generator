@@ -1,5 +1,6 @@
 import { Handler } from 'aws-lambda'
 import { generateAsync } from 'stability-client'
+import { put } from '@vercel/blob'
 
 type Input = {
   prompt: string
@@ -17,10 +18,11 @@ export const handler: Handler = async (req) => {
       steps: 50,
     })
 
-    // const blob = await put(filename, request.body, {
-    //   access: 'public',
-    // });
-    console.log(images)
+    const filePath = images[0].filePath
+
+    await put(filePath, '', {
+      access: 'public',
+    });
 
     return JSON.stringify({ images });
   } catch (e) {
