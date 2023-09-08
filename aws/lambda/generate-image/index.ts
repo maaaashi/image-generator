@@ -26,7 +26,9 @@ export const handler: Handler = async (req) => {
       await put(prompt, arrayBuffer, {
         access: 'public',
       })
-    } catch (error) {}
+    } catch (error) {
+      console.log(error)
+    }
 
     return JSON.stringify({ images })
   } catch (e) {
