@@ -25,9 +25,10 @@ export const handler: Handler = async (req) => {
     });
 
     console.log(blob)
-
+    
     return JSON.stringify({ images });
   } catch (e) {
+    console.log(e)
     return JSON.stringify({})
   }
 }
