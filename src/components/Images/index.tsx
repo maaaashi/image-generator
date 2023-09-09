@@ -27,6 +27,8 @@ export const Images = () => {
     listImages()
   }, [])
 
+  if (pastImages.length === 0) return <></>
+
   return (
     <div className='w-full flex justify-center'>
       <ImageGallery items={pastImages} />
