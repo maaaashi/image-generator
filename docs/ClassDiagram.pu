@@ -1,0 +1,22 @@
+@startuml ClassDiagram
+
+package Domains {
+  class Image {
+    -url: string
+    -draw: string
+    -prompt: string
+    -binary: string
+  }
+}
+
+package Usecases {
+  class ImageUsecase {
+    generateImage(data: GenerateImageInput): Promise<Image>
+    generatePrompt(draw: string, prompt: string): Promise<string>
+    listGeneratedImages(): Promise<Image[]>
+  }
+
+  ImageUsecase --> Image
+}
+
+@enduml

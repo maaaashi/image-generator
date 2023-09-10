@@ -1,6 +1,7 @@
 'use client'
 
-import { postGenerateImageAPI } from '@/libs/postGenerateImage'
+import { Image } from '@/Domains/Image'
+import { ImageUsecase } from '@/Usecases/ImageUsecase'
 import { FormEvent, useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 
@@ -13,8 +14,8 @@ export const Generate = () => {
   const [loading, setLoading] = useState(false)
   const [promptState, setPromptState] = useState('富裕層が飼っている猫')
   const [draw, setDraw] = useState('')
-  const [imageBinaries, setImageBinaries] = useState<Binary[]>([])
-  const [imageBinary, setImageBinary] = useState<Binary>()
+  const [imageState, setImageState] = useState<Image[]>([])
+  const [imageBinary, setImageBinary] = useState<string>('')
   const submitHandler = async (e: FormEvent) => {
     e.preventDefault()
 
@@ -28,11 +29,15 @@ export const Generate = () => {
 
     setLoading(true)
 
-    const binary = await postGenerateImageAPI(promptState, draw)
+    const imageUsecase = new ImageUsecase()
+    const image = await imageUsecase.generateImage({
+      prompt: promptState,
+      draw: draw,
+    })
 
-    if (!binary) return
+    if (!image.binary) return
 
-    setImageBinaries((c) => [...c, binary])
+    setImageState((c) => [...c, image])
     setLoading(false)
   }
 
@@ -42,7 +47,7 @@ export const Generate = () => {
 
     if (!imageBinary) return <></>
     // eslint-disable-next-line @next/next/no-img-element
-    return <img src={imageBinary.data} alt='generate-image' />
+    return <img src={imageBinary} alt='generate-image' />
   }
 
   useEffect(() => {
@@ -50,8 +55,12 @@ export const Generate = () => {
   }, [])
 
   useEffect(() => {
-    setImageBinary(imageBinaries[imageBinaries.length - 1])
-  }, [imageBinaries])
+    const lastImage = imageState[imageState.length - 1]
+
+    if (!lastImage) return
+
+    setImageBinary(lastImage.binary)
+  }, [imageState])
 
   return (
     <>
@@ -104,7 +113,7 @@ export const Generate = () => {
           <div className='border p-5 shadow bg-base-200'>{viewImage()}</div>
           <div className='flex flex-col gap-2 items-center'>
             <p className='font-bold'>履歴</p>
-            {imageBinaries.map((binary, index) => {
+            {imageState.map(({ binary, prompt, draw }, index) => {
               return (
                 <div key={index}>
                   <button
@@ -113,7 +122,7 @@ export const Generate = () => {
                       setImageBinary(binary)
                     }}
                   >
-                    {index + 1}: {binary.prompt}
+                    {index + 1}: {draw}「{prompt}」
                   </button>
                 </div>
               )

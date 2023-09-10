@@ -8,6 +8,7 @@
 - [IMAGE GENERATOR](#image-generator)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Class Diagram](#class-diagram)
 
 # Installation
 
@@ -23,6 +24,10 @@ $ make dev
 ```
 
 Access to http://localhost:3000
+
+# Class Diagram
+
+![ImageUsecase + Image](./docs/ClassDiagram.png)
 
 <!-- # Test
 
