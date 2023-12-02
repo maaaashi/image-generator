@@ -6,6 +6,10 @@ export class Image {
     private _binary: string
   ) {}
 
+  get url() {
+    return this._url
+  }
+
   get binary() {
     return this._binary
   }

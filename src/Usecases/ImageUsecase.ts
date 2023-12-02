@@ -33,13 +33,8 @@ export class ImageUsecase {
     if (!response) return new Image('', '', '', '')
 
     const json = await response.json()
-    const buffer = Buffer.from(json.images[0].buffer.data)
-    return new Image(
-      '',
-      data.draw,
-      data.prompt,
-      'data:image/png;base64,' + buffer.toString('base64')
-    )
+    // const buffer = Buffer.from(json.images[0].buffer.data)
+    return new Image(json.url, data.draw, data.prompt, '')
   }
 
   async generatePrompt(draw: string, prompt: string): Promise<string> {

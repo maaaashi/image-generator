@@ -15,7 +15,7 @@ export const Generate = () => {
   const [promptState, setPromptState] = useState('富裕層が飼っている猫')
   const [draw, setDraw] = useState('')
   const [imageState, setImageState] = useState<Image[]>([])
-  const [imageBinary, setImageBinary] = useState<string>('')
+  const [imageUrl, setImageUrl] = useState<string>('')
   const submitHandler = async (e: FormEvent) => {
     e.preventDefault()
 
@@ -35,7 +35,7 @@ export const Generate = () => {
       draw: draw,
     })
 
-    if (!image.binary) return
+    if (!image.url) return
 
     setImageState((c) => [...c, image])
     setLoading(false)
@@ -45,9 +45,9 @@ export const Generate = () => {
     if (loading)
       return <span className='loading loading-infinity loading-lg'></span>
 
-    if (!imageBinary) return <></>
+    if (!imageUrl) return <></>
     // eslint-disable-next-line @next/next/no-img-element
-    return <img src={imageBinary} alt='generate-image' />
+    return <img src={imageUrl} alt='generate-image' />
   }
 
   useEffect(() => {
@@ -59,7 +59,7 @@ export const Generate = () => {
 
     if (!lastImage) return
 
-    setImageBinary(lastImage.binary)
+    setImageUrl(lastImage.url)
   }, [imageState])
 
   return (
@@ -113,13 +113,13 @@ export const Generate = () => {
           <div className='border p-5 shadow bg-base-200'>{viewImage()}</div>
           <div className='flex flex-col gap-2 items-center'>
             <p className='font-bold'>履歴</p>
-            {imageState.map(({ binary, prompt, draw }, index) => {
+            {imageState.map(({ binary, prompt, draw, url }, index) => {
               return (
                 <div key={index}>
                   <button
                     className='btn'
                     onClick={() => {
-                      setImageBinary(binary)
+                      setImageUrl(url)
                     }}
                   >
                     {index + 1}: {draw}「{prompt}」

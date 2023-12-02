@@ -45,7 +45,7 @@ export const handler: Handler = async (req) => {
       })
 
       console.log('generate: ' + blob.url)
-      return JSON.stringify({ url: blob.url })
+      return JSON.stringify({ url: blob.url, prompt })
     } catch (error) {
       console.log(error)
       return JSON.stringify({})
